@@ -47,6 +47,8 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
+unsigned buf[4] = {0, 0, 0, 0};
+
 /* USER CODE END Variables */
 osThreadId Task1Handle;
 osThreadId Task2Handle;
@@ -151,7 +153,29 @@ void Task1_LED(void const * argument)
 /* USER CODE END Header_Task2_SPI */
 void Task2_SPI(void const * argument)
 {
+
   /* USER CODE BEGIN Task2_SPI */
+	buf[2] = 0x55;	//¿ØÖÆ¼Ä´æÆ÷
+	buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
+	buf[0] = 0x00;	//0-5V
+	WriteToAD5422(3, buf);	//Write 551000 µ½¿ØÖÆ¼Ä´æÆ÷
+
+	buf[2] = 0x01;	//Êý¾Ý¼Ä´æÆ÷
+	buf[1] = 0x00;	//
+	buf[1] = 0x00;
+	WriteToAD5422(3, buf);	//Write 0x010000 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
+	osDelay(1000);
+
+	buf[2] = 0x01;              //Data register
+	buf[1] = 0xff;
+	buf[0] = 0xff;				//Write 0x010001 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
+	WriteToAD5422(3,buf);		//Write 0x018000 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
+
+	buf[2] = 0x02;
+	buf[1] = 0x00;
+	buf[0] = 0x01;			    //Read data register
+	WriteToAD5422(3,buf);
+
   /* Infinite loop */
   for(;;)
   {
