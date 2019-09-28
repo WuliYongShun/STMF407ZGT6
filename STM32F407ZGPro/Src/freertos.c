@@ -135,7 +135,9 @@ void Task1_LED(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+
+	  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    osDelay(500);
   }
   /* USER CODE END Task1_LED */
 }
@@ -153,7 +155,9 @@ void Task2_SPI(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+//		HAL_SPI_Transmit(hspi);
+    osDelay(250);
   }
   /* USER CODE END Task2_SPI */
 }

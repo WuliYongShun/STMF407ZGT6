@@ -64,6 +64,14 @@ void Error_Handler(void);
 #define LED2_GPIO_Port GPIOF
 #define AD5412_CS_Pin GPIO_PIN_15
 #define AD5412_CS_GPIO_Port GPIOB
+#define LATCH_Pin GPIO_PIN_4
+#define LATCH_GPIO_Port GPIOD
+#define SCLK_Pin GPIO_PIN_5
+#define SCLK_GPIO_Port GPIOD
+#define SDI_Pin GPIO_PIN_6
+#define SDI_GPIO_Port GPIOD
+#define SDO_Pin GPIO_PIN_7
+#define SDO_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
