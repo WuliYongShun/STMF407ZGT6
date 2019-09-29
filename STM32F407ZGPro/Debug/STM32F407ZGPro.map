@@ -1218,6 +1218,18 @@ Discarded input sections
                 0x00000000        0x2 Src\AD5412Driver.o
  .text.ReadFromAD5422
                 0x00000000       0x80 Src\AD5412Driver.o
+ .text          0x00000000        0x0 Src\KYEDriver.o
+ .data          0x00000000        0x0 Src\KYEDriver.o
+ .bss           0x00000000        0x0 Src\KYEDriver.o
+ .debug_info    0x00000000      0x115 Src\KYEDriver.o
+ .debug_abbrev  0x00000000       0x75 Src\KYEDriver.o
+ .debug_aranges
+                0x00000000       0x18 Src\KYEDriver.o
+ .debug_line    0x00000000      0x16c Src\KYEDriver.o
+ .debug_str     0x00000000      0x236 Src\KYEDriver.o
+ .comment       0x00000000       0x7d Src\KYEDriver.o
+ .ARM.attributes
+                0x00000000       0x39 Src\KYEDriver.o
  .text          0x00000000        0x0 Src\freertos.o
  .data          0x00000000        0x0 Src\freertos.o
  .bss           0x00000000        0x0 Src\freertos.o
@@ -1379,6 +1391,7 @@ LOAD Middlewares\Third_Party\FreeRTOS\Source\stream_buffer.o
 LOAD Middlewares\Third_Party\FreeRTOS\Source\tasks.o
 LOAD Middlewares\Third_Party\FreeRTOS\Source\timers.o
 LOAD Src\AD5412Driver.o
+LOAD Src\KYEDriver.o
 LOAD Src\freertos.o
 LOAD Src\gpio.o
 LOAD Src\main.o

@@ -35,4 +35,9 @@ void ReadFromAD5422(unsigned char count,unsigned char *buf);
 //uint16_t CurrentToData(uint8_t curren_type, uint8_t output_data);
 
 
+
+
+#ifdef __cplusplus
+}
+#endif
 #endif /* AD5412DRIVER_H_ */
