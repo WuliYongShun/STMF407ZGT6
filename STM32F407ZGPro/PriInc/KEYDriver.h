@@ -16,7 +16,24 @@ extern "C" {
 #endif
 
 
+typedef enum
+{
+	NoKeyDown = 0,
+	KeySureDown,
+	OnceKeyDown,
+	ContiousKeyDown
+}StateStatus;
 
+enum
+{
+	KeyWake,
+	Key1,
+	Key2,
+	Key3,
+	KeyNone
+};
+
+StateStatus ReadKeyStatus(void);
 
 
 #ifdef __cplusplus

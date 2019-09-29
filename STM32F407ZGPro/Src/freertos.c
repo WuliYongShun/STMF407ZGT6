@@ -28,6 +28,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */     
 #include "AD5412Driver.h"
+#include "KEYDriver.h"
 
 /* USER CODE END Includes */
 
@@ -155,6 +156,8 @@ void LED_Task(void const * argument)
 void AD5412Task(void const * argument)
 {
   /* USER CODE BEGIN AD5412Task */
+	uint16_t key;
+
 	buf[2] = 0x55;	//¿ØÖÆ¼Ä´æÆ÷
 	buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
 	buf[0] = 0x00;	//0-5V
@@ -178,8 +181,16 @@ void AD5412Task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-    osDelay(100);
+	  key = ReadKeyStatus();
+	  if(key == OnceKeyDown)
+	  {
+		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, SET);	//³¤ÁÁ
+	  }
+	  else if(key == ContiousKeyDown)
+	  {
+		  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+	  }
+    osDelay(10);
   }
   /* USER CODE END AD5412Task */
 }
