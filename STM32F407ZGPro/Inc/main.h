@@ -10,10 +10,10 @@
   * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -32,6 +32,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+
 
 /* USER CODE END Includes */
 
@@ -58,10 +60,18 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define K1_Pin GPIO_PIN_2
+#define K1_GPIO_Port GPIOE
+#define K2_Pin GPIO_PIN_3
+#define K2_GPIO_Port GPIOE
+#define K3_Pin GPIO_PIN_4
+#define K3_GPIO_Port GPIOE
 #define LED1_Pin GPIO_PIN_9
 #define LED1_GPIO_Port GPIOF
 #define LED2_Pin GPIO_PIN_10
 #define LED2_GPIO_Port GPIOF
+#define K_WakeUp_Pin GPIO_PIN_0
+#define K_WakeUp_GPIO_Port GPIOA
 #define AD5412_CS_Pin GPIO_PIN_15
 #define AD5412_CS_GPIO_Port GPIOB
 #define LATCH_Pin GPIO_PIN_4

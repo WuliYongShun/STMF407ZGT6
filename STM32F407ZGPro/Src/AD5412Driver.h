@@ -1,14 +1,12 @@
 /*
  * AD5412Driver.h
  *
- *  Created on: 2019年9月28日
+ *  Created on: 2019年9月29日
  *      Author: S
  */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef AD5412DRIVER_H_
 #define AD5412DRIVER_H_
-
 
 #include "stm32f4xx_hal.h"
 #include "gpio.h"
@@ -35,5 +33,6 @@ enum IoutType
 void WriteToAD5422(unsigned char count,unsigned char *buf);
 void ReadFromAD5422(unsigned char count,unsigned char *buf);
 //uint16_t CurrentToData(uint8_t curren_type, uint8_t output_data);
+
 
 #endif /* AD5412DRIVER_H_ */

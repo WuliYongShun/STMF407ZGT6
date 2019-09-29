@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
@@ -26,6 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */     
+#include "AD5412Driver.h"
 
 /* USER CODE END Includes */
 
@@ -47,19 +49,19 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
-unsigned buf[4] = {0, 0, 0, 0};
+unsigned char buf[4] = {0, 0, 0, 0};
 
 /* USER CODE END Variables */
-osThreadId Task1Handle;
-osThreadId Task2Handle;
+osThreadId Task1_LEDHandle;
+osThreadId Task2_AD5412Handle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
    
 /* USER CODE END FunctionPrototypes */
 
-void Task1_LED(void const * argument);
-void Task2_SPI(void const * argument);
+void LED_Task(void const * argument);
+void AD5412Task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -106,13 +108,13 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of Task1 */
-  osThreadDef(Task1, Task1_LED, osPriorityIdle, 0, 128);
-  Task1Handle = osThreadCreate(osThread(Task1), NULL);
+  /* definition and creation of Task1_LED */
+  osThreadDef(Task1_LED, LED_Task, osPriorityNormal, 0, 128);
+  Task1_LEDHandle = osThreadCreate(osThread(Task1_LED), NULL);
 
-  /* definition and creation of Task2 */
-  osThreadDef(Task2, Task2_SPI, osPriorityIdle, 0, 128);
-  Task2Handle = osThreadCreate(osThread(Task2), NULL);
+  /* definition and creation of Task2_AD5412 */
+  osThreadDef(Task2_AD5412, AD5412Task, osPriorityIdle, 0, 128);
+  Task2_AD5412Handle = osThreadCreate(osThread(Task2_AD5412), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -120,41 +122,39 @@ void MX_FREERTOS_Init(void) {
 
 }
 
-/* USER CODE BEGIN Header_Task1_LED */
+/* USER CODE BEGIN Header_LED_Task */
 /**
-  * @brief  Function implementing the Task1 thread.
+  * @brief  Function implementing the Task1_LED thread.
   * @param  argument: Not used 
   * @retval None
   */
-/* USER CODE END Header_Task1_LED */
-void Task1_LED(void const * argument)
+/* USER CODE END Header_LED_Task */
+void LED_Task(void const * argument)
 {
     
     
     
 
-  /* USER CODE BEGIN Task1_LED */
+  /* USER CODE BEGIN LED_Task */
   /* Infinite loop */
   for(;;)
   {
-
 	  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-    osDelay(500);
+    osDelay(250);
   }
-  /* USER CODE END Task1_LED */
+  /* USER CODE END LED_Task */
 }
 
-/* USER CODE BEGIN Header_Task2_SPI */
+/* USER CODE BEGIN Header_AD5412Task */
 /**
-* @brief Function implementing the Task2 thread.
+* @brief Function implementing the Task2_AD5412 thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_Task2_SPI */
-void Task2_SPI(void const * argument)
+/* USER CODE END Header_AD5412Task */
+void AD5412Task(void const * argument)
 {
-
-  /* USER CODE BEGIN Task2_SPI */
+  /* USER CODE BEGIN AD5412Task */
 	buf[2] = 0x55;	//¿ØÖÆ¼Ä´æÆ÷
 	buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
 	buf[0] = 0x00;	//0-5V
@@ -175,15 +175,13 @@ void Task2_SPI(void const * argument)
 	buf[1] = 0x00;
 	buf[0] = 0x01;			    //Read data register
 	WriteToAD5422(3,buf);
-
   /* Infinite loop */
   for(;;)
   {
-		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-//		HAL_SPI_Transmit(hspi);
-    osDelay(250);
+	  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    osDelay(100);
   }
-  /* USER CODE END Task2_SPI */
+  /* USER CODE END AD5412Task */
 }
 
 /* Private application code --------------------------------------------------*/

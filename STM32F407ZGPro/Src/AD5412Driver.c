@@ -36,10 +36,9 @@ void WriteToAD5422(unsigned char count,unsigned char *buf)
 	CLR_LATCH();
 
 	/* 一次发送缓冲区中count个数据 */
-	for(i = 0; i <= count; i++)	//i = count; i > 0; i--
+	for(i = count; i > 0; i--)
  	{
-	 	//ValueToWrite =	*(buf + i - 1);
-		ValueToWrite = *(buf + i);
+	 	ValueToWrite =	*(buf + i - 1);
 
 		/* 一次发8位 */
 		for(j=0; j<8; j++)
