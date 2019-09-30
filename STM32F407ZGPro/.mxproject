@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=E:/ShunWork/SoftWork/MyStm32/ing/STM32F407ZGPro/STMF407ZGT6/STM32F407ZGPro/Inc
+HeaderPath=E:/ShunWork/SoftWork/MyStm32/ing/STM32F407ZGPro/STMF407ZGT6/STMF407ZGT6/STM32F407ZGPro/Inc
 HeaderFiles=gpio.h;FreeRTOSConfig.h;spi.h;stm32f4xx_it.h;stm32f4xx_hal_conf.h;main.h;
-SourcePath=E:/ShunWork/SoftWork/MyStm32/ing/STM32F407ZGPro/STMF407ZGT6/STM32F407ZGPro/Src
+SourcePath=E:/ShunWork/SoftWork/MyStm32/ing/STM32F407ZGPro/STMF407ZGT6/STMF407ZGT6/STM32F407ZGPro/Src
 SourceFiles=gpio.c;freertos.c;spi.c;stm32f4xx_it.c;stm32f4xx_hal_msp.c;stm32f4xx_hal_timebase_tim.c;main.c;
 
 [PreviousLibFiles]

@@ -1,4 +1,5 @@
-freertos.c:133:6:LED_Task	8	static
-freertos.c:156:6:AD5412Task	16	static
-freertos.c:76:6:vApplicationGetIdleTaskMemory	0	static
-freertos.c:90:6:MX_FREERTOS_Init	72	static
+freertos.c:138:6:LED_Task	8	static
+freertos.c:162:6:AD5412Task	8	static
+freertos.c:240:6:LEDTask	16	static
+freertos.c:77:6:vApplicationGetIdleTaskMemory	0	static
+freertos.c:91:6:MX_FREERTOS_Init	104	static

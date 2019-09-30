@@ -45,3 +45,6 @@ stm32f407zgpro\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/ti
 stm32f407zgpro\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 stm32f407zgpro\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 stm32f407zgpro\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+stm32f407zgpro\freertos.o: ..\PriInc\AD5412Driver.h
+stm32f407zgpro\freertos.o: ../Inc/gpio.h
+stm32f407zgpro\freertos.o: ..\PriInc\KEYDriver.h

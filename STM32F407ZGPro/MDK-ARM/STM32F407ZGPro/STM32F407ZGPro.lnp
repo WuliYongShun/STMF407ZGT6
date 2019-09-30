@@ -34,6 +34,8 @@
 "stm32f407zgpro\cmsis_os.o"
 "stm32f407zgpro\heap_4.o"
 "stm32f407zgpro\port.o"
+"stm32f407zgpro\keydriver.o"
+"stm32f407zgpro\ad5412driver.o"
 --library_type=microlib --strict --scatter "STM32F407ZGPro\STM32F407ZGPro.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

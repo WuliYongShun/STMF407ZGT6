@@ -40,7 +40,7 @@ static uint8_t GetKey(void)
 
 StateStatus ReadKeyStatus(void)
 {
-	StateStatus state = NoKeyDown;
+	static StateStatus state = NoKeyDown;
 	static int TimeCount = 0;
 	int KeyPress = ReadKey1();
 	StateStatus KeyReturn = NoKeyDown;
@@ -95,8 +95,10 @@ StateStatus ReadKeyStatus(void)
 		else
 		{
 			KeyReturn = NoKeyDown;
-
 		}
+		break;
+		
+	default:
 		break;
 	}
 	return KeyReturn;

@@ -19,7 +19,6 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
@@ -49,12 +48,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
+uint8_t FlagLed;
 unsigned char buf[4] = {0, 0, 0, 0};
 
 /* USER CODE END Variables */
 osThreadId Task1_LEDHandle;
 osThreadId Task2_AD5412Handle;
+osThreadId Task3_KEYHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -63,6 +63,7 @@ osThreadId Task2_AD5412Handle;
 
 void LED_Task(void const * argument);
 void AD5412Task(void const * argument);
+void LEDTask(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -117,6 +118,10 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(Task2_AD5412, AD5412Task, osPriorityIdle, 0, 128);
   Task2_AD5412Handle = osThreadCreate(osThread(Task2_AD5412), NULL);
 
+  /* definition and creation of Task3_KEY */
+  osThreadDef(Task3_KEY, LEDTask, osPriorityIdle, 0, 128);
+  Task3_KEYHandle = osThreadCreate(osThread(Task3_KEY), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -132,6 +137,7 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_LED_Task */
 void LED_Task(void const * argument)
 {
+    
     
     
     
@@ -156,11 +162,20 @@ void LED_Task(void const * argument)
 void AD5412Task(void const * argument)
 {
   /* USER CODE BEGIN AD5412Task */
-	uint16_t key;
+
+
 
 	buf[2] = 0x55;	//控制寄存器
 	buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
-	buf[0] = 0x00;	//0-5V
+
+//	buf[0] = 0x00;				//Selecting the Voltage Mode(0V - 5V)
+//	buf[0] = 0x01;				//Selecting the Voltage Mode(0V - 10V)
+	buf[0] = 0x02;				//Selecting the Voltage Mode(-5V - 5V)
+//	buf[0] = 0x03;				//Selecting the Voltage Mode(-10V - 10V)
+//	buf[0] = 0x05;				//Selecting the Current Mode(4mA - 20mA)
+//	buf[0] = 0x06;				//Selecting the Current Mode(0mA - 20mA)
+//	buf[0] = 0x07;				//Selecting the Current Mode(0mA - 24mA)
+
 	WriteToAD5422(3, buf);	//Write 551000 到控制寄存器
 
 	buf[2] = 0x01;	//数据寄存器
@@ -169,10 +184,7 @@ void AD5412Task(void const * argument)
 	WriteToAD5422(3, buf);	//Write 0x010000 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
 	osDelay(1000);
 
-	buf[2] = 0x01;              //Data register
-	buf[1] = 0xff;
-	buf[0] = 0xff;				//Write 0x010001 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
-	WriteToAD5422(3,buf);		//Write 0x018000 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
+
 
 	buf[2] = 0x02;
 	buf[1] = 0x00;
@@ -181,18 +193,76 @@ void AD5412Task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+	  if(FlagLed == 1)
+	  {
+		  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+		  buf[2] = 0x01;
+		  buf[1] = 0x5c;
+		  buf[0] = 0x00;
+	  }
+
+
+	  if(FlagLed == 2)
+	  {
+		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);	//长亮
+		  buf[2] = 0x01;
+		  buf[1] = 0x7c;	//4~20mA档位下的15mA
+		  buf[0] = 0x00;
+	  }
+
+	  if(FlagLed == 3)
+	  {
+		  buf[2] = 0x01;
+		  buf[1] = 0xac;
+		  buf[0] = 0x00;
+	  }
+
+	  if(FlagLed == 3)
+	  {
+		  buf[2] = 0x01;
+		  buf[1] = 0xff;
+		  buf[0] = 0xff;
+		  FlagLed = 0;
+	  }
+
+    osDelay(500);
+  }
+  /* USER CODE END AD5412Task */
+}
+
+/* USER CODE BEGIN Header_LEDTask */
+/**
+* @brief Function implementing the Task3_KEY thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_LEDTask */
+void LEDTask(void const * argument)
+{
+  /* USER CODE BEGIN LEDTask */
+	uint16_t key;
+
+
+  /* Infinite loop */
+  for(;;)
+  {
 	  key = ReadKeyStatus();
 	  if(key == OnceKeyDown)
 	  {
-		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, SET);	//长亮
+		  FlagLed += 1;
 	  }
-	  else if(key == ContiousKeyDown)
+	  if(key == ContiousKeyDown)
 	  {
-		  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+		  FlagLed = 5;
 	  }
+
+
+	  WriteToAD5422(3,buf);		//Write 0x018000 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
+
+
     osDelay(10);
   }
-  /* USER CODE END AD5412Task */
+  /* USER CODE END LEDTask */
 }
 
 /* Private application code --------------------------------------------------*/
