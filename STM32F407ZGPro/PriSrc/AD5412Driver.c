@@ -26,6 +26,7 @@ void AD54X2_Delay(uint32_t Delay)
 	while (Delay > 0) Delay--;
 }
 
+/* ÏòAD5412Ğ´¼Ä´æÆ÷ */
 void WriteToAD5422(unsigned char count,unsigned char *buf)
 {
 	unsigned char ValueToWrite = 0;
@@ -73,6 +74,7 @@ void WriteToAD5422(unsigned char count,unsigned char *buf)
 	AD54X2_Delay(20);
 }
 
+/* ¶ÁÈ¡AD5412¼Ä´æÆ÷Êı¾İ */
 void ReadFromAD5422(unsigned char count,unsigned char *buf)
 {
 	unsigned char i = 0;

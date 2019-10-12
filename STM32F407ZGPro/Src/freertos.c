@@ -49,7 +49,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 uint8_t FlagLed;
-unsigned char buf[4] = {0, 0, 0, 0};
+unsigned char buf[4] = {0, 0, 0, 0};	//用于写入AD5412数组
 
 /* USER CODE END Variables */
 osThreadId Task1_LEDHandle;
@@ -163,16 +163,20 @@ void AD5412Task(void const * argument)
 {
   /* USER CODE BEGIN AD5412Task */
 
+//	buf[ 2 ] = 0x56;
+//	buf[ 1 ] = 0x00;
+//	buf[ 0 ] = 0x01;
+//	WriteToAD5422(3, buf);	//Write 551000 到控制寄存器
+
 
 
 	buf[2] = 0x55;	//控制寄存器
 	buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
-
 //	buf[0] = 0x00;				//Selecting the Voltage Mode(0V - 5V)
 //	buf[0] = 0x01;				//Selecting the Voltage Mode(0V - 10V)
-	buf[0] = 0x02;				//Selecting the Voltage Mode(-5V - 5V)
+//	buf[0] = 0x02;				//Selecting the Voltage Mode(-5V - 5V)
 //	buf[0] = 0x03;				//Selecting the Voltage Mode(-10V - 10V)
-//	buf[0] = 0x05;				//Selecting the Current Mode(4mA - 20mA)
+	buf[0] = 0x05;				//Selecting the Current Mode(4mA - 20mA)
 //	buf[0] = 0x06;				//Selecting the Current Mode(0mA - 20mA)
 //	buf[0] = 0x07;				//Selecting the Current Mode(0mA - 24mA)
 
@@ -185,11 +189,11 @@ void AD5412Task(void const * argument)
 	osDelay(1000);
 
 
-
-	buf[2] = 0x02;
-	buf[1] = 0x00;
-	buf[0] = 0x01;			    //Read data register
-	WriteToAD5422(3,buf);
+//
+//	buf[2] = 0x02;
+//	buf[1] = 0x00;
+//	buf[0] = 0x01;			    //Read data register
+//	WriteToAD5422(3,buf);
   /* Infinite loop */
   for(;;)
   {
@@ -197,32 +201,71 @@ void AD5412Task(void const * argument)
 	  {
 		  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 		  buf[2] = 0x01;
-		  buf[1] = 0x5c;
-		  buf[0] = 0x00;
+		  buf[1] = 0x33;
+		  buf[0] = 0x33;
 	  }
 
 
-	  if(FlagLed == 2)
+	  else if(FlagLed == 2)
 	  {
 		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);	//长亮
 		  buf[2] = 0x01;
-		  buf[1] = 0x7c;	//4~20mA档位下的15mA
-		  buf[0] = 0x00;
+		  buf[1] = 0x66;
+		  buf[0] = 0x66;
 	  }
 
-	  if(FlagLed == 3)
+	  else if(FlagLed == 3)
 	  {
 		  buf[2] = 0x01;
-		  buf[1] = 0xac;
-		  buf[0] = 0x00;
+		  buf[1] = 0x99;
+		  buf[0] = 0x99;
 	  }
 
-	  if(FlagLed == 3)
+	  else if(FlagLed == 4)
+	  {
+		  buf[2] = 0x01;
+		  buf[1] = 0xcc;
+		  buf[0] = 0xcc;
+//		  FlagLed = 0;
+	  }
+
+	  else if(FlagLed == 5)
 	  {
 		  buf[2] = 0x01;
 		  buf[1] = 0xff;
 		  buf[0] = 0xff;
 		  FlagLed = 0;
+	  }
+
+	  if( ucKeyValue == KeyNone )
+	  {
+		  return;
+	  }
+	  /* 如果按键1按下，选择为0-5V模式 */
+	  else if( ( ucKeyValue == KEY_ONE ) && ( FlagLed == 0 ) )
+	  {
+		  buf[2] = 0x55;	//控制寄存器
+		  buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
+		  buf[0] = 0x00;				//Selecting the Voltage Mode(0V - 5V)
+		  WriteToAD5422(3, buf);
+	  }
+
+	  /* 按键2选择 0-10V */
+	  else if( ( ucKeyValue == KEY_TWO ) && ( FlagLed == 0 ) )
+	  {
+		  buf[2] = 0x55;	//控制寄存器
+		  buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
+		  buf[0] = 0x01;				//Selecting the Voltage Mode(0V - 10V)
+		  WriteToAD5422(3, buf);
+	  }
+
+	  /* 按键3选择 4-20mA */
+	  else if( ( ucKeyValue == KEY_THREE ) && ( FlagLed == 0 ) )
+	  {
+		  buf[2] = 0x55;	//控制寄存器
+		  buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
+		  buf[0] = 0x06;				//Selecting the Current Mode(4mA - 20mA)
+		  WriteToAD5422(3, buf);
 	  }
 
     osDelay(500);
@@ -253,9 +296,11 @@ void LEDTask(void const * argument)
 	  }
 	  if(key == ContiousKeyDown)
 	  {
-		  FlagLed = 5;
+		  FlagLed = 8;
 	  }
 
+	  /* 状态机按键扫描，推荐10ms定时 */
+	  KeyProcess();
 
 	  WriteToAD5422(3,buf);		//Write 0x018000 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
 
