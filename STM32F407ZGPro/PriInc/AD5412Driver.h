@@ -28,11 +28,19 @@ enum IoutType
 	IOUT_0_24
 };
 
+/* 输出电压类型：1、0-5V，2、0-10V */
+enum VoutType
+{
+	VOUT_0_5,
+	VOUT_0_10,
+};
+
 
 
 void WriteToAD5422(unsigned char count,unsigned char *buf);
 void ReadFromAD5422(unsigned char count,unsigned char *buf);
-//uint16_t CurrentToData(uint8_t curren_type, uint8_t output_data);
+uint16_t CurrentToData(uint8_t curren_type, uint8_t output_data);
+uint16_t VoltageToData( uint8_t vol_type, uint8_t output_data );
 
 
 

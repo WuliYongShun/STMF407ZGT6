@@ -48,7 +48,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-uint8_t FlagLed;
+uint8_t FlagLed = 0;
+uint8_t ModeSel = 0;
 unsigned char buf[4] = {0, 0, 0, 0};	//用于写入AD5412数组
 
 /* USER CODE END Variables */
@@ -162,6 +163,9 @@ void LED_Task(void const * argument)
 void AD5412Task(void const * argument)
 {
   /* USER CODE BEGIN AD5412Task */
+//	uint16_t data;
+
+//	data = CurrentToData(IOUT_4_20,20);
 
 //	buf[ 2 ] = 0x56;
 //	buf[ 1 ] = 0x00;
@@ -197,45 +201,255 @@ void AD5412Task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  if(FlagLed == 1)
+	  if( ModeSel == 0 )
 	  {
-		  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-		  buf[2] = 0x01;
-		  buf[1] = 0x33;
-		  buf[0] = 0x33;
+		  //4
+		  	  if(FlagLed == 1)
+		  	  {
+		  		  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+		  		  buf[2] = 0x01;
+		  		  buf[1] = 0x00;
+		  		  buf[0] = 0x00;
+		  	  }
+
+		  	  //5
+		  	  else if(FlagLed == 2)
+		  	  {
+		  		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);	//长亮
+		  		  buf[2] = 0x01;
+		  		  buf[1] = 0x10;
+		  		  buf[0] = 0x00;
+		  	  }
+
+		  	  //6
+		  	  else if(FlagLed == 3)
+		  	  {
+		  		  buf[2] = 0x01;
+		  		  buf[1] = 0x20;
+		  		  buf[0] = 0x00;
+		  	  }
+
+		  	  //7
+		  	  else if(FlagLed == 4)
+		  	  {
+		  		  buf[2] = 0x01;
+		  		  buf[1] = 0x30;
+		  		  buf[0] = 0x00;
+		  	  }
+
+		  	  //8
+		  	  else if(FlagLed == 5)
+		  	  {
+		  		  buf[2] = 0x01;
+		  		  buf[1] = 0x43;
+		  		  buf[0] = 0x34;
+		  	  }
+
+		  	  //9
+		  	  else if(FlagLed == 6)
+		  	  {
+		  		  buf[2] = 0x01;
+		  		  buf[1] = 0x50;
+		  		  buf[0] = 0x00;
+		  	  }
+
+		  	  //10
+		  	  else if(FlagLed == 7)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0x60;
+		  	  		  buf[0] = 0x00;
+		  	  	  }
+
+		  	  //11
+		  	  else if(FlagLed == 8)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0x70;
+		  	  		  buf[0] = 0x00;
+		  	  	  }
+
+		  	  //12
+		  	  else if(FlagLed == 9)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0x80;
+		  	  		  buf[0] = 0x00;
+		  	  	  }
+
+		  	  //13
+		  	  else if(FlagLed == 10)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0x90;
+		  	  		  buf[0] = 0x00;
+		  	  	  }
+
+		  	  //14
+		  	  else if(FlagLed == 11)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0xA0;
+		  	  		  buf[0] = 0x00;
+		  	  	  }
+
+		  	  //15
+		  	  else if(FlagLed == 12)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0xB4;
+		  	  		  buf[0] = 0xcc;
+		  	  	  }
+
+		  	  //16
+		  	  else if(FlagLed == 13)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0xC4;
+		  	  		  buf[0] = 0xcc;
+		  	  	  }
+
+		  	  //17
+		  	  else if(FlagLed == 14)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0xD4;
+		  	  		  buf[0] = 0xcc;
+		  	  	  }
+
+
+		  	  //18
+		  	  else if(FlagLed == 15)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0xE6;
+		  	  		  buf[0] = 0x66;
+		  	  	  }
+
+		  	  //19
+		  	  else if(FlagLed == 16)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0xf6;
+		  	  		  buf[0] = 0x66;
+		  	  	  }
+
+		  	  //20
+		  	  else if(FlagLed == 17)
+		  	  	  {
+		  	  		  buf[2] = 0x01;
+		  	  		  buf[1] = 0xff;
+		  	  		  buf[0] = 0xff;
+		  	  		  FlagLed = 0;
+		  	  	  }
+
 	  }
 
 
-	  else if(FlagLed == 2)
+	  if( ModeSel == 1 )
 	  {
-		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);	//长亮
-		  buf[2] = 0x01;
-		  buf[1] = 0x66;
-		  buf[0] = 0x66;
+		  //0V
+		  if( FlagLed == 1)
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0x00;
+			  buf[0] = 0x00;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //0.5V
+		  else if( FlagLed == 2 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0x19;
+			  buf[0] = 0x99;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //1V
+		  else if( FlagLed == 3 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0x33;
+			  buf[0] = 0x33;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //1.5V
+		  else if( FlagLed == 4 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0x4C;
+			  buf[0] = 0xCC;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //2V
+		  else if( FlagLed == 5 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0x66;
+			  buf[0] = 0x66;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //2.5V
+		  else if( FlagLed == 6 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0x80;
+			  buf[0] = 0x00;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //3V
+		  else if( FlagLed == 7 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0x99;
+			  buf[0] = 0x99;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //3.5V
+		  else if( FlagLed == 8 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0xB3;
+			  buf[0] = 0x33;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //4V
+		  else if( FlagLed == 9 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0xCC;
+			  buf[0] = 0xCC;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //4.5V
+		  else if( FlagLed == 10 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0xE6;
+			  buf[0] = 0x66;
+			  WriteToAD5422(3, buf);
+		  }
+
+		  //5V
+		  else if( FlagLed == 11 )
+		  {
+			  buf[2] = 0x01;
+			  buf[1] = 0xFF;
+			  buf[0] = 0xFF;
+			  WriteToAD5422(3, buf);
+			  FlagLed = 0;
+		  }
+
 	  }
 
-	  else if(FlagLed == 3)
-	  {
-		  buf[2] = 0x01;
-		  buf[1] = 0x99;
-		  buf[0] = 0x99;
-	  }
-
-	  else if(FlagLed == 4)
-	  {
-		  buf[2] = 0x01;
-		  buf[1] = 0xcc;
-		  buf[0] = 0xcc;
-//		  FlagLed = 0;
-	  }
-
-	  else if(FlagLed == 5)
-	  {
-		  buf[2] = 0x01;
-		  buf[1] = 0xff;
-		  buf[0] = 0xff;
-		  FlagLed = 0;
-	  }
 
 	  if( ucKeyValue == KeyNone )
 	  {
@@ -248,25 +462,26 @@ void AD5412Task(void const * argument)
 		  buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
 		  buf[0] = 0x00;				//Selecting the Voltage Mode(0V - 5V)
 		  WriteToAD5422(3, buf);
+		  ModeSel = 1;
 	  }
 
-	  /* 按键2选择 0-10V */
-	  else if( ( ucKeyValue == KEY_TWO ) && ( FlagLed == 0 ) )
-	  {
-		  buf[2] = 0x55;	//控制寄存器
-		  buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
-		  buf[0] = 0x01;				//Selecting the Voltage Mode(0V - 10V)
-		  WriteToAD5422(3, buf);
-	  }
-
-	  /* 按键3选择 4-20mA */
-	  else if( ( ucKeyValue == KEY_THREE ) && ( FlagLed == 0 ) )
-	  {
-		  buf[2] = 0x55;	//控制寄存器
-		  buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
-		  buf[0] = 0x06;				//Selecting the Current Mode(4mA - 20mA)
-		  WriteToAD5422(3, buf);
-	  }
+//	  /* 按键2选择 0-10V */
+//	  else if( ( ucKeyValue == KEY_TWO ) && ( FlagLed == 0 ) )
+//	  {
+//		  buf[2] = 0x55;	//控制寄存器
+//		  buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
+//		  buf[0] = 0x01;				//Selecting the Voltage Mode(0V - 10V)
+//		  WriteToAD5422(3, buf);
+//	  }
+//
+//	  /* 按键3选择 4-20mA */
+//	  else if( ( ucKeyValue == KEY_THREE ) && ( FlagLed == 0 ) )
+//	  {
+//		  buf[2] = 0x55;	//控制寄存器
+//		  buf[1] = 0x10;	//Disable Slew Rate	while selecting the current mode
+//		  buf[0] = 0x06;				//Selecting the Current Mode(4mA - 20mA)
+//		  WriteToAD5422(3, buf);
+//	  }
 
     osDelay(500);
   }

@@ -121,48 +121,52 @@ void ReadFromAD5422(unsigned char count,unsigned char *buf)
 }
 
 
-//uint16_t CurrentToData(uint8_t current_type, uint8_t output_data)
-//{
-//	uint16_t Data;
-//
-//#ifdef	AD5412
-//	switch(current_type)
-//	{
-//	case IOUT_4_20:
-//		Data = ((output_data - 4) * 4096) / 16;
-//		break;
-//
-//	case IOUT_0_20:
-//		Data = ((output_data) * 4096) / 20;
-//		break;
-//
-//	case IOUT_0_24:
-//		Data = ((output_data) * 4096) / 24;
-//		break;
-//
-//	default:
-//		break;
-//	}
-//#endif
-//
-//#ifdef AD5422
-//	switch(current_type)
-//		{
-//		case IOUT_4_20:
-//			Data = ((output_data - 4) * 65536) / 16;
-//			break;
-//
-//		case IOUT_0_20:
-//			Data = ((output_data) * 65536) / 20;
-//			break;
-//
-//		case IOUT_0_24:
-//			Data = ((output_data) * 65536) / 24;
-//			break;
-//
-//		default:
-//			break;
-//		}
-//#endif
-//	return Data;
-//}
+uint16_t CurrentToData(uint8_t current_type, uint8_t output_data)
+{
+	uint16_t Data;
+
+	switch(current_type)
+	{
+	case IOUT_4_20:
+		Data = ((output_data - 4) * 4096) / 16;
+//		return Data;
+		break;
+
+	case IOUT_0_20:
+		Data = ((output_data) * 4096) / 20;
+//		return Data;
+		break;
+
+	case IOUT_0_24:
+		Data = ((output_data) * 4096) / 24;
+		break;
+
+	default:
+		break;
+	}
+	return Data;
+}
+
+uint16_t VoltageToData( uint8_t vol_type, uint8_t output_data )
+{
+	uint16_t Data;
+	switch(vol_type)
+	{
+		case VOUT_0_5:
+		{
+			Data = ( ( output_data * 4096 ) ) / 5;
+			break;
+		}
+		case VOUT_0_10:
+		{
+			Data = ( ( output_data * 4096 ) ) / 10;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
+
+	return Data;
+}
