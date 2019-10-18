@@ -139,9 +139,9 @@ void MX_FREERTOS_Init(void) {
 void LED_Task(void const * argument)
 {
     
-    
-    
-    
+
+
+
 
   /* USER CODE BEGIN LED_Task */
   /* Infinite loop */
@@ -241,8 +241,8 @@ void AD5412Task(void const * argument)
 		  	  else if(FlagLed == 5)
 		  	  {
 		  		  buf[2] = 0x01;
-		  		  buf[1] = 0x43;
-		  		  buf[0] = 0x34;
+		  		  buf[1] = 0x40;
+		  		  buf[0] = 0x00;
 		  	  }
 
 		  	  //9
@@ -255,19 +255,19 @@ void AD5412Task(void const * argument)
 
 		  	  //10
 		  	  else if(FlagLed == 7)
-		  	  	  {
-		  	  		  buf[2] = 0x01;
-		  	  		  buf[1] = 0x60;
-		  	  		  buf[0] = 0x00;
-		  	  	  }
+			  {
+				  buf[2] = 0x01;
+				  buf[1] = 0x60;
+				  buf[0] = 0x00;
+			  }
 
 		  	  //11
 		  	  else if(FlagLed == 8)
-		  	  	  {
-		  	  		  buf[2] = 0x01;
-		  	  		  buf[1] = 0x70;
-		  	  		  buf[0] = 0x00;
-		  	  	  }
+			  {
+				  buf[2] = 0x01;
+				  buf[1] = 0x70;
+				  buf[0] = 0x00;
+			  }
 
 		  	  //12
 		  	  else if(FlagLed == 9)
@@ -297,24 +297,24 @@ void AD5412Task(void const * argument)
 		  	  else if(FlagLed == 12)
 		  	  	  {
 		  	  		  buf[2] = 0x01;
-		  	  		  buf[1] = 0xB4;
-		  	  		  buf[0] = 0xcc;
+		  	  		  buf[1] = 0xB0;
+		  	  		  buf[0] = 0x00;
 		  	  	  }
 
 		  	  //16
 		  	  else if(FlagLed == 13)
 		  	  	  {
 		  	  		  buf[2] = 0x01;
-		  	  		  buf[1] = 0xC4;
-		  	  		  buf[0] = 0xcc;
+		  	  		  buf[1] = 0xC0;
+		  	  		  buf[0] = 0x00;
 		  	  	  }
 
 		  	  //17
 		  	  else if(FlagLed == 14)
 		  	  	  {
 		  	  		  buf[2] = 0x01;
-		  	  		  buf[1] = 0xD4;
-		  	  		  buf[0] = 0xcc;
+		  	  		  buf[1] = 0xD0;
+		  	  		  buf[0] = 0x00;
 		  	  	  }
 
 
@@ -322,16 +322,16 @@ void AD5412Task(void const * argument)
 		  	  else if(FlagLed == 15)
 		  	  	  {
 		  	  		  buf[2] = 0x01;
-		  	  		  buf[1] = 0xE6;
-		  	  		  buf[0] = 0x66;
+		  	  		  buf[1] = 0xE0;
+		  	  		  buf[0] = 0x00;
 		  	  	  }
 
 		  	  //19
 		  	  else if(FlagLed == 16)
 		  	  	  {
 		  	  		  buf[2] = 0x01;
-		  	  		  buf[1] = 0xf6;
-		  	  		  buf[0] = 0x66;
+		  	  		  buf[1] = 0xf0;
+		  	  		  buf[0] = 0x00;
 		  	  	  }
 
 		  	  //20
