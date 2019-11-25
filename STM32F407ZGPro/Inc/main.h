@@ -72,8 +72,6 @@ void Error_Handler(void);
 #define LED2_GPIO_Port GPIOF
 #define K_WakeUp_Pin GPIO_PIN_0
 #define K_WakeUp_GPIO_Port GPIOA
-#define AD5412_CS_Pin GPIO_PIN_15
-#define AD5412_CS_GPIO_Port GPIOB
 #define LATCH_Pin GPIO_PIN_4
 #define LATCH_GPIO_Port GPIOD
 #define SCLK_Pin GPIO_PIN_5
@@ -82,6 +80,14 @@ void Error_Handler(void);
 #define SDI_GPIO_Port GPIOD
 #define SDO_Pin GPIO_PIN_7
 #define SDO_GPIO_Port GPIOD
+#define ADS7321_SCK_Pin GPIO_PIN_3
+#define ADS7321_SCK_GPIO_Port GPIOB
+#define ADS7321_SDO_Pin GPIO_PIN_4
+#define ADS7321_SDO_GPIO_Port GPIOB
+#define ADS7321_SDI_Pin GPIO_PIN_5
+#define ADS7321_SDI_GPIO_Port GPIOB
+#define ADS7321_CS_Pin GPIO_PIN_8
+#define ADS7321_CS_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

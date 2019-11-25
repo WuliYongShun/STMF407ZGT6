@@ -16,7 +16,7 @@
 #define CLR_SDI()	HAL_GPIO_WritePin(SDI_GPIO_Port, SDI_Pin, RESET)
 #define SET_SDI()	HAL_GPIO_WritePin(SDI_GPIO_Port, SDI_Pin, SET)
 
-#define GET_SDO()	HAL_GPIO_ReadPin(SDO_GPIO_Port, SDO_Pin)
+#define GET_SDO()	HAL_GPIO_ReadPin(SDI_GPIO_Port, SDO_Pin)
 
 
 

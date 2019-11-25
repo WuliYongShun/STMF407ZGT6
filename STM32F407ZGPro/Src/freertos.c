@@ -28,6 +28,7 @@
 /* USER CODE BEGIN Includes */     
 #include "AD5412Driver.h"
 #include "KEYDriver.h"
+#include "ADS7321Driver.h"
 
 /* USER CODE END Includes */
 
@@ -56,6 +57,7 @@ unsigned char buf[4] = {0, 0, 0, 0};	//ÓÃÓÚÐ´ÈëAD5412Êý×é
 osThreadId Task1_LEDHandle;
 osThreadId Task2_AD5412Handle;
 osThreadId Task3_KEYHandle;
+osThreadId Task4_AD7321Handle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -65,6 +67,7 @@ osThreadId Task3_KEYHandle;
 void LED_Task(void const * argument);
 void AD5412Task(void const * argument);
 void LEDTask(void const * argument);
+void ADTask(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -123,6 +126,10 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(Task3_KEY, LEDTask, osPriorityIdle, 0, 128);
   Task3_KEYHandle = osThreadCreate(osThread(Task3_KEY), NULL);
 
+  /* definition and creation of Task4_AD7321 */
+  osThreadDef(Task4_AD7321, ADTask, osPriorityIdle, 0, 128);
+  Task4_AD7321Handle = osThreadCreate(osThread(Task4_AD7321), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -139,9 +146,10 @@ void MX_FREERTOS_Init(void) {
 void LED_Task(void const * argument)
 {
     
-
-
-
+    
+    
+    
+    
 
   /* USER CODE BEGIN LED_Task */
   /* Infinite loop */
@@ -513,16 +521,43 @@ void LEDTask(void const * argument)
 	  {
 		  FlagLed = 8;
 	  }
-
 	  /* ×´Ì¬»ú°´¼üÉ¨Ãè£¬ÍÆ¼ö10ms¶¨Ê± */
 	  KeyProcess();
 
 	  WriteToAD5422(3,buf);		//Write 0x018000 to SHIFT REGISTER  to write 0x018000 to DATA REGISTER
 
-
     osDelay(10);
   }
   /* USER CODE END LEDTask */
+}
+
+/* USER CODE BEGIN Header_ADTask */
+/**
+* @brief Function implementing the Task4_AD7321 thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ADTask */
+void ADTask(void const * argument)
+{
+  /* USER CODE BEGIN ADTask */
+	uint16_t ad_value;
+
+	/* ÅäÖÃ¿ØÖÆ¼Ä´æÆ÷ */
+	AD7321_Read_Wite( CONTROL_REGISTER | ADD0_VIN0 | SINGLE_ENDED | NORMAL_MODE | SEQUENCER_NOT_USED | TWOS_COMPLEMENT_CODING | INTERNAL_REF );
+
+	/* ÅäÖÃ·¶Î§¼Ä´æÆ÷ */
+	AD7321_Read_Wite( RANGE_REGISTER | VIN0_5V );
+
+  /* Infinite loop */
+  for(;;)
+  {
+	  ad_value =  AD7321_Read_Wite( CONVENTION );
+//	  printf( "%d/r/n", ad_hvalue );
+
+    osDelay(1000);
+  }
+  /* USER CODE END ADTask */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -15,6 +15,16 @@
 extern "C" {
 #endif
 
+/* 单片机引脚宏定义 */
+#define LATCH_Pin GPIO_PIN_4
+#define LATCH_GPIO_Port GPIOD
+#define SCLK_Pin GPIO_PIN_5
+#define SCLK_GPIO_Port GPIOD
+#define SDI_Pin GPIO_PIN_6
+#define SDI_GPIO_Port GPIOD
+#define SDO_Pin GPIO_PIN_7
+#define SDO_GPIO_Port GPIOD
+
 /* 预处理宏定义，选择芯片不可以同时定义 */
 #define AD5412
 //#define AD5422
